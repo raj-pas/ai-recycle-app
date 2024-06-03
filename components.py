@@ -1,8 +1,8 @@
 import requests
-import json
 from typing import (
     Any,
     Dict,
+    IO,
     List,
 )
 
@@ -17,6 +17,8 @@ from openai import _exceptions as openai_exceptions
 
 from settings import (
     IMGBB_API_KEY,
+    IMGBB_EXPIRY_TIME,
+    IMGBB_URL,
     LLM_MODEL,
 )
 
@@ -53,7 +55,7 @@ def item_search_api(identified_item: str) -> List[Dict[str, str]]:
                 "message": f"No results found for identified_item: {identified_item}",
             },
         ]
-        response_json = json.loads(response.text)
+        response_json = response.json()
         if response_json:
             result = [
                 {
@@ -109,7 +111,7 @@ def item_detail_api(item_id: str) -> Dict[str, Any]:
 
     try:
         # Parse JSON response
-        response_json = json.loads(response.text)
+        response_json = response.json()
         if response_json and response_json.get("sections"):
             return response_json["sections"]
         return {
@@ -192,4 +194,27 @@ executor = AgentExecutor(
     handle_parsing_errors=True,
 )
 
+# ImageBB Image Upload Tool
 
+def upload_image(image_file_buffer: IO[bytes]) -> str:
+    # Define the payload with the image file and expiration parameter
+    payload = {
+        'expiration': IMGBB_EXPIRY_TIME,
+        'key': IMGBB_API_KEY,
+    }
+    files = {
+        'image': image_file_buffer
+    }
+
+    # Make the POST request
+    response = requests.post(url=IMGBB_URL, data=payload, files=files)
+
+    try:
+        # Parse JSON response
+        result = "Image file could not be uploaded."
+        response_json = response.json()
+        if response_json and response_json.get("data") and response_json["data"].get("url"):
+            result = response_json["data"]["url"]
+        return result
+    except requests.exceptions.JSONDecodeError as e:
+        return "Could not parse JSON response. Image file could not be uploaded."
