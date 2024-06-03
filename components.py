@@ -16,6 +16,7 @@ from langchain.tools import tool
 from openai import _exceptions as openai_exceptions
 
 from settings import (
+    IMGBB_API_KEY,
     LLM_MODEL,
 )
 

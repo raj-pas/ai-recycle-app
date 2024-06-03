@@ -5,7 +5,7 @@ import streamlit as st
 from components import executor
 
 # st.image("./image/logo.webp", width=400)
-st.title("Raj's AI Recycling Assistant")
+st.title("AI Recycling Assistant 🤖♻️")
 
 if prompt := st.chat_input():
     st.chat_message("user").write(prompt)
