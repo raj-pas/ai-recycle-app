@@ -13,3 +13,7 @@ pydantic~=1.10.13
 
 # LangChain Hub
 langchainhub
+
+# Streamlit
+streamlit
+watchdog

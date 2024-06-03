@@ -26,4 +26,5 @@ Copy the .env.example file to .env and set the values for the environment variab
 ```bash
 $ streamlit run app.py
 ```
-This would run the application server in the default 8501 port. You can change the port by setting the PORT environment variable.
+This would run the application server in the default 8501 port. You can access the application by visiting http://localhost:8501 in your browser.
+
