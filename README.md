@@ -1,5 +1,4 @@
-# PITS Advisor Copilot
-
+# AI Recycle App
 
 ## How to setup environment for the application
 Note: It is recommended to use Python 3.11 or above for this application.
