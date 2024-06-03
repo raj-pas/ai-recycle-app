@@ -1,0 +1,15 @@
+# Python .env management
+python-dotenv
+
+# LangChain
+langchain~=0.1.8
+langchain_openai
+
+# LangGraph
+langgraph
+
+# Downgraded verion of pydantic
+pydantic~=1.10.13
+
+# LangChain Hub
+langchainhub
