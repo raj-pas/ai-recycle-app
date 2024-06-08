@@ -1,5 +1,6 @@
 from langchain_community.callbacks.streamlit import StreamlitCallbackHandler
 from langchain_core.messages import HumanMessage
+from langchain.callbacks.tracers.langchain import wait_for_all_tracers
 import streamlit as st
 
 from components import (
@@ -18,5 +19,8 @@ if img_file_buffer := st.camera_input("Take a picture for the AI Assistant to he
             { "type": "text", "text": "Can I recycle it? Also any additional information if available would be helpful" },
             { "type": "image_url", "image_url": { "url": url }}
         ])
-        response = executor.invoke({"input": human_message}, {"callbacks": [st_callback]})
-        st.write(response["output"])
+        try:
+            response = executor.invoke({"input": human_message}, {"callbacks": [st_callback]})
+            st.write(response["output"])
+        finally:
+            wait_for_all_tracers()
